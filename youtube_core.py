@@ -1,15 +1,9 @@
 import os
-import requests
 from pytube import YouTube, Playlist
 import ffmpeg
 from mutagen.id3 import ID3, APIC, TIT2, TPE1, TALB, TCON, TYER, TRCK
 from mutagen.mp3 import MP3
-
-
-def get_image_bytes(url):
-    response = requests.get(url)
-    response.raise_for_status()
-    return response.content
+from utils import get_image_bytes
 
 
 def DownloadPlaylist(url):
@@ -78,15 +72,3 @@ def DownloadTrack(url, yt_obj=None, AlbumName=None, TrackNumber=None, TrackCount
 
     # result of success
     print(yt.title + " has been successfully downloaded.")
-
-
-# DownloadTrack(
-#     str(input("Enter the URL of the video you want to download: \n>> ")))
-
-# DownloadPlaylist(
-#     "https://music.youtube.com/playlist?list=PLwBnYkSZTLgLFk7bb4DChdrRvdWZQSA0Y")
-# DownloadTrack(
-#     "https://music.youtube.com/watch?v=K8GZ8SoNfmE&si=KPtyfJx5w_JlD91W")
-# if __name__ == "__main__":
-    import ui
-    ui.root.mainloop()
