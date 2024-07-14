@@ -33,19 +33,15 @@ text_animation(text, 0.015)
 url = input(
     f"{bcolors.ENDC}Enter the URL of the video or playlist you want to download: \n>> ")
 
-urlType = None
-
 parsed_url = urlparse(url)
 
-if "youtube.com" not in parsed_url.netloc or "youtu.be" not in parsed_url.netloc:
+if "youtube.com" in parsed_url.netloc or "youtu.be" in parsed_url.netloc:
+    query_params = parse_qs(parsed_url.query)
+
+    # Check if the 'list' parameter exists
+    if 'list' in query_params:
+        youtube_core.DownloadPlaylist(url)
+    elif 'v' in query_params or parsed_url.netloc == "youtu.be":
+        youtube_core.DownloadTrack(url)
+else:
     print(f"{bcolors.FAIL}Invalid URL. Please enter a valid YouTube URL.")
-    # exit process
-    sys.exit()
-
-query_params = parse_qs(parsed_url.query)
-
-# Check if the 'list' parameter exists
-if 'list' in query_params:
-    youtube_core.DownloadPlaylist(url)
-elif 'v' in query_params:
-    youtube_core.DownloadTrack(url)

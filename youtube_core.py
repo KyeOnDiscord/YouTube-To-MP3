@@ -35,10 +35,7 @@ def DownloadTrack(url, yt_obj=None, AlbumName=None, TrackNumber=None, TrackCount
     out_file = video.download(output_path=output_path)
 
     base = os.path.splitext(out_file)[0]
-    # rename file
-
     new_file = f"{base}.mp3"
-
     # convert to mp3  (out file is .mp4 extension)
     ffmpeg.input(out_file).output(
         new_file, acodec='libmp3lame', compression_level=6, audio_bitrate="160k").run(overwrite_output=True)
