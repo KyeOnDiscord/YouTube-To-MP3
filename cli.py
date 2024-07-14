@@ -37,7 +37,7 @@ urlType = None
 
 parsed_url = urlparse(url)
 
-if "youtube.com" not in parsed_url.netloc:
+if "youtube.com" not in parsed_url.netloc or "youtu.be" not in parsed_url.netloc:
     print(f"{bcolors.FAIL}Invalid URL. Please enter a valid YouTube URL.")
     # exit process
     sys.exit()
