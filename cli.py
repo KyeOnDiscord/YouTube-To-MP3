@@ -2,6 +2,10 @@ import sys
 import time
 import youtube_core  # local module
 from urllib.parse import urlparse, parse_qs
+from utils import is_ffmpeg_installed
+
+
+is_ffmpeg_installed()
 
 
 class bcolors:

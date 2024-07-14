@@ -2,8 +2,8 @@ import tkinter
 from tkinter import ttk
 
 import sv_ttk
-from youtube_core import get_image_bytes
-from pytube import YouTube, Playlist
+from utils import get_image_bytes, is_ffmpeg_installed
+from pytube import Playlist
 
 
 class SimplePlaylist:
@@ -59,4 +59,5 @@ sv_ttk.set_theme("dark")
 
 
 if __name__ == "__main__":
+    is_ffmpeg_installed()
     root.mainloop()
