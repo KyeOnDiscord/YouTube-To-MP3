@@ -10,6 +10,8 @@
 
 ### Installation:
 ```bash
+git clone https://github.com/KyeOnDiscord/YouTube-To-MP3.git
+cd YouTube-To-MP3
 pip install -r requirements.txt
 ```
 
