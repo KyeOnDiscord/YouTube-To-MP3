@@ -47,5 +47,5 @@ query_params = parse_qs(parsed_url.query)
 # Check if the 'list' parameter exists
 if 'list' in query_params:
     youtube_core.DownloadPlaylist(url)
-elif 'v':
+elif 'v' in query_params:
     youtube_core.DownloadTrack(url)
