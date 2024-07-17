@@ -2,7 +2,7 @@ import sys
 import time
 import youtube_core  # local module
 from urllib.parse import urlparse, parse_qs
-from utils import is_ffmpeg_installed
+from utils import is_ffmpeg_installed, isValidYouTubeURL, isPlaylist, isVideo
 
 
 is_ffmpeg_installed()
@@ -37,15 +37,10 @@ text_animation(text, 0.015)
 url = input(
     f"{bcolors.ENDC}Enter the URL of the video or playlist you want to download: \n>> ")
 
-parsed_url = urlparse(url)
-
-if "youtube.com" in parsed_url.netloc or "youtu.be" in parsed_url.netloc:
-    query_params = parse_qs(parsed_url.query)
-
-    # Check if the 'list' parameter exists
-    if 'list' in query_params:
+if isValidYouTubeURL(url):
+    if isPlaylist(url):
         youtube_core.DownloadPlaylist(url)
-    elif 'v' in query_params or parsed_url.netloc == "youtu.be":
+    elif isVideo(url):
         youtube_core.DownloadTrack(url)
 else:
     print(f"{bcolors.FAIL}Invalid URL. Please enter a valid YouTube URL.")
