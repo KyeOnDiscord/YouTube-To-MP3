@@ -1,5 +1,5 @@
 ffmpeg_python==0.2.0
 mutagen==1.47.0
-pytube==15.0.0
+pytubefix==6.2.2
 Requests==2.32.3
 sv_ttk==2.6.0

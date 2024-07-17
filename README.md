@@ -5,7 +5,6 @@
 ### Requirements:
 - Python 3.9+
 - ffmpeg (https://www.ffmpeg.org/download.html)
-- pytube needs to be modified with a recent [bugfix](https://github.com/pytube/pytube/issues/1954#issuecomment-2218287594)
 
 
 ### Installation:
