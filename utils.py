@@ -1,5 +1,5 @@
-import requests
 import subprocess
+import requests
 
 
 def get_image_bytes(url):
