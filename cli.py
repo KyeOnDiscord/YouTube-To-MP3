@@ -5,7 +5,10 @@ from urllib.parse import urlparse, parse_qs
 from utils import is_ffmpeg_installed, isValidYouTubeURL, isPlaylist, isVideo
 
 
-is_ffmpeg_installed()
+
+if not is_ffmpeg_installed():
+    print("FFmpeg is not installed! Please install FFmpeg to use this program.")
+    sys.exit(1)
 
 
 class bcolors:

@@ -11,19 +11,19 @@ def get_image_bytes(url):
 
 def is_ffmpeg_installed():
     try:
-        # Try to run ffmpeg version command
-        result = subprocess.run(["ffmpeg", "-version"], capture_output=True)
-        # Check the return code (0 indicates success)
-        return result.returncode == 0
+        # Run the ffmpeg command to check if it is installed
+        subprocess.run(['ffmpeg', '-version'], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        return True
     except subprocess.CalledProcessError:
-        return False
+        print("ffmpeg is installed, but returned an error")
+    except FileNotFoundError:
+        print("ffmpeg is not installed")
+    return False
 
 
 def isValidYouTubeURL(url):
     parsed_url = urlparse(url)
-    if "youtube.com" in parsed_url.netloc or "youtu.be" in parsed_url.netloc:
-        return True
-    return False
+    return "youtube.com" in parsed_url.netloc or "youtu.be" in parsed_url.netloc
 
 
 def isPlaylist(url):
@@ -40,9 +40,3 @@ def isVideo(url):
 
     # Check if the 'v' parameter exists
     return 'v' in query_params or parsed_url.netloc == "youtu.be"
-
-
-if is_ffmpeg_installed():
-    print("FFmpeg is installed!")
-else:
-    print("FFmpeg is not installed.")

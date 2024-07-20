@@ -57,6 +57,8 @@ def search_url():
             "Error", "Invalid URL. Please enter a valid YouTube URL.")
 
 
+if not is_ffmpeg_installed():
+        messagebox.showerror("Error", "FFmpeg is not installed! Please install FFmpeg to use this program.")
 root = tkinter.Tk()
 root.title("YouTube to MP3")
 
@@ -89,5 +91,4 @@ sv_ttk.set_theme("dark")
 
 
 if __name__ == "__main__":
-    is_ffmpeg_installed()
     root.mainloop()
