@@ -1,9 +1,12 @@
 import tkinter
+from tkinter import messagebox
 from tkinter import ttk
+from PIL import Image, ImageTk
+import io
 
 import sv_ttk
-from utils import get_image_bytes, is_ffmpeg_installed
-from pytube import Playlist
+from utils import get_image_bytes, is_ffmpeg_installed, isValidYouTubeURL, isPlaylist, isVideo
+from pytubefix import Playlist, YouTube
 
 
 class SimplePlaylist:
@@ -19,12 +22,39 @@ class SimplePlaylist:
         self.thumbnailimg = get_image_bytes(self.thumbnail_url)
 
 
-def download_mp3():
+class SimpleVideo:
+    def __init__(self, url):
+        self.video = YouTube(url)
+        self.title = self.video.title
+        self.owner = self.video.author
+
+        self.thumbnail_url = self.video.thumbnail_url
+        self.thumbnailimg = get_image_bytes(self.thumbnail_url)
+
+
+def search_url():
     url = url_entry.get()
-    p = SimplePlaylist(url)
-    # p = Playlist(url)
-    album_name.config(text=p.title)
-    album_image.config(data=p.thumbnailimg, format='png')
+    if isValidYouTubeURL(url):
+        if isPlaylist(url):
+            playlist = SimplePlaylist(url)
+            image = Image.open(io.BytesIO(playlist.thumbnailimg))
+            tk_image = ImageTk.PhotoImage(image)
+            image = ImageTk.PhotoImage(file=tk_image)
+            imagebox.config(image=image)
+            imagebox.image = image
+           # album_image.config(image=playlist.thumbnailimg)
+
+        elif isVideo(url):
+            video = SimpleVideo(url)
+            image = Image.open(io.BytesIO(video.thumbnailimg))
+            tk_image = ImageTk.PhotoImage(image)
+            image = ImageTk.PhotoImage(file=tk_image)
+            imagebox.config(image=image)
+            imagebox.image = image
+    else:
+        # messagebox tkinter
+        messagebox.showerror(
+            "Error", "Invalid URL. Please enter a valid YouTube URL.")
 
 
 root = tkinter.Tk()
@@ -43,15 +73,15 @@ url_entry = ttk.Entry(root, width=50)
 url_entry.pack(pady=10)
 
 # Create a download button
-download_button = ttk.Button(root, text="Search", command=download_mp3)
+download_button = ttk.Button(root, text="Search", command=search_url)
 download_button.pack(pady=10)
 
 album_name = ttk.Label(root, text="Name", font=("Helvetica", 16))
 album_name.pack(pady=10)
 
-album_image = tkinter.PhotoImage()
-label = ttk.Label(root, image=album_image)
-label.pack()
+
+imagebox = ttk.Label(root)
+imagebox.pack()
 
 sv_ttk.set_theme("dark")
 

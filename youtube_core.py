@@ -5,10 +5,8 @@ from mp3_metadata import ApplyID3Tags
 
 
 def DownloadPlaylist(url):
-    p = Playlist(
-        url)
-    playlistName = p.title.replace(
-        "Album - ", "")
+    p = Playlist(url)
+    playlistName = p.title.replace("Album - ", "")
     print("Downloading Playlist: " + playlistName)
 
     for index, track in enumerate(p.videos):

@@ -14,7 +14,8 @@ def ApplyID3Tags(filepath, yt, AlbumName=None, TrackNumber=None, TrackCount=None
             data=get_image_bytes(yt.thumbnail_url)  # Image data
         )
     )
-    audio.tags.add(TPE1(encoding=3, text=yt.author))  # Artist
+    audio.tags.add(TPE1(encoding=3, text=yt.author.replace(
+        " - Topic", "")))  # Artist
     if AlbumName:
         audio.tags.add(TALB(encoding=3, text=AlbumName))   # Album
     if TrackNumber:
