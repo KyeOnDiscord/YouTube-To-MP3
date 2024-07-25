@@ -1,10 +1,7 @@
 import sys
 import time
 import youtube_core  # local module
-from urllib.parse import urlparse, parse_qs
 from utils import is_ffmpeg_installed, isValidYouTubeURL, isPlaylist, isVideo
-
-
 
 if not is_ffmpeg_installed():
     print("FFmpeg is not installed! Please install FFmpeg to use this program.")
