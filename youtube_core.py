@@ -4,6 +4,15 @@ import ffmpeg
 from mp3_metadata import ApplyID3Tags
 
 
+
+# https://stackoverflow.com/a/64277310/12897035
+def on_progress(stream, chunk, bytes_remaining):
+    total_size = stream.filesize
+    bytes_downloaded = total_size - bytes_remaining
+    percentage_of_completion = bytes_downloaded / total_size * 100
+    print(percentage_of_completion)
+    
+    
 def DownloadPlaylist(url):
     p = Playlist(url)
     playlistName = p.title.replace("Album - ", "")
@@ -24,6 +33,7 @@ def DownloadTrack(url, yt_obj=None, AlbumName=None, TrackNumber=None, TrackCount
     print("Downloading: " + yt.title)
     # extract only audio from the video
     video = yt.streams.get_audio_only()
+    yt.register_on_progress_callback(on_progress)
 
     output_path = "Downloads"
     if AlbumName:

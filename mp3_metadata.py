@@ -2,7 +2,6 @@
 import urllib.parse
 import requests
 from mutagen.id3 import ID3, APIC, TIT2, TPE1, TALB, TCON, TYER, TRCK,SYLT, Encoding,USLT, COMM
-from mutagen.mp3 import MP3
 from mutagen._constants import GENRES
 from utils import get_image_bytes
 
@@ -23,12 +22,10 @@ def DownloadSongLyrics(yt):
     return response.json()
 
 def GetSyncedSongLyrics(lyrics): return [(entry['lyrics'],entry['seconds'] * 1000) for entry in lyrics]
+
 def GetSyncedSongLyricsCOMM(lyrics): return "\n".join((format_custom_time(entry['seconds']) + entry['lyrics']) for entry in lyrics)
 
 def GetSongLyrics(lyrics): return "\n".join([entry["lyrics"] for entry in lyrics])
-
-    
-
 
 def ApplyID3Tags(filepath, yt, AlbumName=None, TrackNumber=None, TrackCount=None):
     tags = ID3(filepath)
