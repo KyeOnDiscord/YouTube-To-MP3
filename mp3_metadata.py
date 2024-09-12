@@ -1,14 +1,15 @@
-# Description: This file contains functions to apply ID3 tags to the mp3 file.
+""" This file contains functions to apply ID3 tags to the mp3 file."""
+from io import BytesIO
 import urllib.parse
 import requests
-from io import BytesIO
 from mutagen.id3 import ID3, APIC, TIT2, TPE1, TALB, TCON, TYER, TRCK,SYLT, Encoding,USLT, COMM
 from mutagen._constants import GENRES
-from utils import get_image_bytes
 from pytubefix import YouTube
 from PIL import Image
+from utils import get_image_bytes
 
 def get_album_cover(yt: YouTube) -> bytes:
+    """Gets an album cover in bytes from a YouTube object"""
     # Open the image
     url = f"https://i.ytimg.com/vi/{yt.video_id}/maxresdefault.jpg"
     req = requests.get(url, timeout=5)
@@ -34,16 +35,17 @@ def get_album_cover(yt: YouTube) -> bytes:
     return image_bytes.getvalue()
 
 def format_custom_time(seconds):
+    """Generates a time string for Flacbox [0:0:0]"""
     minutes = int(seconds // 60)
     seconds_remainder = seconds % 60
     seconds_full = int(seconds_remainder)
     hundredths = int((seconds_remainder - seconds_full) * 100)
-    
     return f"[{minutes:02d}:{seconds_full:02d}.{hundredths:02d}]"
 
 def DownloadSongLyrics(yt: YouTube):
+    """Downloads Song Lyrics from textyl api"""
     url = "http://api.textyl.co/api/lyrics?q=" + urllib.parse.quote_plus(yt.title + " " + yt.author.replace(' - Topic', ''))
-    response = requests.request("GET", url,verify=False)
+    response = requests.request("GET", url,verify=False, timeout="5")
     if response.status_code != 200:
         return None
     return response.json()

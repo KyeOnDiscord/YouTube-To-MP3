@@ -9,7 +9,7 @@ if not is_ffmpeg_installed():
     print("FFmpeg is not installed! Please install FFmpeg to use this program.")
     sys.exit(1)
 
-class bcolors:
+class Bcolors:
     """Colors for printing"""
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -31,12 +31,12 @@ def text_animation(text, delay):
 
 if __name__ == "__main__":
     TITLE = "YouTube To MP3 | Made by https://github.com/KyeOnDiscord"
-    print(f"{bcolors.BOLD + bcolors.OKCYAN}")
+    print(f"{Bcolors.BOLD + Bcolors.OKCYAN}")
 
     text_animation(TITLE, 0.015)
     while True:
         url = input(
-            f"{bcolors.ENDC}Enter the URL of the video or playlist you want to download: \n>> ")
+            f"{Bcolors.ENDC}Enter the URL of the video or playlist you want to download: \n>> ")
 
         if isValidYouTubeURL(url):
             if isPlaylist(url):
@@ -45,4 +45,4 @@ if __name__ == "__main__":
                 downloaded =youtube_core.DownloadTrack(url)
                 print("Downloaded " + downloaded.title)
         else:
-            print(f"{bcolors.FAIL}Invalid URL. Please enter a valid YouTube URL.")
+            print(f"{Bcolors.FAIL}Invalid URL. Please enter a valid YouTube URL.")

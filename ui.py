@@ -1,12 +1,11 @@
-import tkinter
-from tkinter import messagebox
-from tkinter import ttk
-from PIL import Image, ImageTk
+"""Tkinter GUI"""
 import io
-
+from tkinter import messagebox, ttk, Tk
+from PIL import Image, ImageTk
+from pytubefix import Playlist, YouTube
 import sv_ttk
 from utils import get_image_bytes, is_ffmpeg_installed, isValidYouTubeURL, isPlaylist, isVideo
-from pytubefix import Playlist, YouTube
+
 
 
 class SimplePlaylist:
@@ -58,8 +57,8 @@ def search_url():
 
 
 if not is_ffmpeg_installed():
-        messagebox.showerror("Error", "FFmpeg is not installed! Please install FFmpeg to use this program.")
-root = tkinter.Tk()
+    messagebox.showerror("Error","FFmpeg is not installed! Please install FFmpeg to use this program.")
+root = Tk()
 root.title("YouTube to MP3")
 
 # Set the window size

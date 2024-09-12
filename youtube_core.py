@@ -1,8 +1,8 @@
+"""Module for downloading YouTube Videos as MP3"""
 import os
 from pytubefix import YouTube, Playlist
 import ffmpeg
 from mp3_metadata import ApplyID3Tags
-
 
 
 # https://stackoverflow.com/a/64277310/12897035
@@ -11,7 +11,6 @@ def on_progress(stream, chunk, bytes_remaining):
     bytes_downloaded = total_size - bytes_remaining
     percentage_of_completion = bytes_downloaded / total_size * 100
     print(percentage_of_completion)
-    
 def DownloadPlaylist(url):
     p = Playlist(url)
     playlistName = p.title.replace("Album - ", "")
