@@ -5,10 +5,6 @@ import time
 import youtube_core  # local module
 from utils import is_ffmpeg_installed, isValidYouTubeURL, isPlaylist, isVideo
 
-if not is_ffmpeg_installed():
-    print("FFmpeg is not installed! Please install FFmpeg to use this program.")
-    sys.exit(1)
-
 class Bcolors:
     """Colors for printing"""
     HEADER = '\033[95m'
@@ -30,6 +26,9 @@ def text_animation(text, delay):
 
 
 if __name__ == "__main__":
+    if not is_ffmpeg_installed():
+        print("FFmpeg is not installed! Please install FFmpeg to use this program.")
+        sys.exit(1)
     TITLE = "YouTube To MP3 | Made by https://github.com/KyeOnDiscord"
     print(f"{Bcolors.BOLD + Bcolors.OKCYAN}")
 

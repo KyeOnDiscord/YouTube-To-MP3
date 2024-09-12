@@ -3,6 +3,7 @@ import os
 from pytubefix import YouTube, Playlist
 import ffmpeg
 from mp3_metadata import ApplyID3Tags
+from cli import Bcolors
 
 
 # https://stackoverflow.com/a/64277310/12897035
@@ -14,8 +15,7 @@ def on_progress(stream, chunk, bytes_remaining):
 def DownloadPlaylist(url):
     p = Playlist(url)
     playlistName = p.title.replace("Album - ", "")
-    from cli import bcolors
-    print(f"{bcolors.HEADER}Downloading Playlist: " + playlistName)
+    print(f"{Bcolors.HEADER}Downloading Playlist: " + playlistName)
 
     for index, track in enumerate(p.videos):
         print(f"{track.title} [{index + 1}/{len(p.videos)}]")
