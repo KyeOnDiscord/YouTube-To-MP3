@@ -12,28 +12,27 @@ def on_progress(stream, chunk, bytes_remaining):
     percentage_of_completion = bytes_downloaded / total_size * 100
     print(percentage_of_completion)
     
-    
 def DownloadPlaylist(url):
     p = Playlist(url)
     playlistName = p.title.replace("Album - ", "")
-    print("Downloading Playlist: " + playlistName)
+    from cli import bcolors
+    print(f"{bcolors.HEADER}Downloading Playlist: " + playlistName)
 
     for index, track in enumerate(p.videos):
+        print(f"{track.title} [{index + 1}/{len(p.videos)}]")
         DownloadTrack(track.watch_url, track, playlistName,
-                      index + 1, len(p.videos))
-        print(f"Downloaded {index + 1}/{len(p.videos)}")
+                    index + 1, len(p.videos))
 
 
-def DownloadTrack(url, yt_obj=None, AlbumName=None, TrackNumber=None, TrackCount=None):
+def DownloadTrack(url, yt_obj=None, AlbumName=None, TrackNumber=None, TrackCount=None) -> YouTube:
     yt = None
     if yt_obj:
         yt = yt_obj
     else:
         yt = YouTube(url)
-    print("Downloading: " + yt.title)
     # extract only audio from the video
     video = yt.streams.get_audio_only()
-    yt.register_on_progress_callback(on_progress)
+    #yt.register_on_progress_callback(on_progress)
 
     output_path = "Downloads"
     if AlbumName:
@@ -47,9 +46,6 @@ def DownloadTrack(url, yt_obj=None, AlbumName=None, TrackNumber=None, TrackCount
         new_file, acodec='libmp3lame', compression_level=6, audio_bitrate="160k", loglevel="quiet").run(overwrite_output=True)
     # delete out_file
     os.remove(out_file)
-
     # edit tags
     ApplyID3Tags(new_file, yt, AlbumName, TrackNumber, TrackCount)
-
-    # result of success
-    print(yt.title + " has been successfully downloaded.")
+    return yt

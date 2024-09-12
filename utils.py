@@ -4,7 +4,7 @@ from urllib.parse import urlparse, parse_qs
 
 
 def get_image_bytes(url):
-    response = requests.get(url)
+    response = requests.get(url, timeout=5)
     response.raise_for_status()
     return response.content
 
