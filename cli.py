@@ -2,6 +2,7 @@
 
 import sys
 import time
+from pytubefix import YouTube
 import youtube_core  # local module
 from utils import is_ffmpeg_installed, isValidYouTubeURL, isPlaylist, isVideo
 
@@ -41,7 +42,7 @@ if __name__ == "__main__":
             if isPlaylist(url):
                 youtube_core.DownloadPlaylist(url)
             elif isVideo(url):
-                downloaded =youtube_core.DownloadTrack(url)
+                downloaded = youtube_core.DownloadTrack(YouTube(url))
                 print("Downloaded " + downloaded.title)
         else:
             print(f"{Bcolors.FAIL}Invalid URL. Please enter a valid YouTube URL.")

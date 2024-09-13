@@ -13,22 +13,18 @@ def on_progress(stream, chunk, bytes_remaining):
     percentage_of_completion = bytes_downloaded / total_size * 100
     print(percentage_of_completion)
 def DownloadPlaylist(url):
+    """Downloads a Playlist (collection of videos)"""
     p = Playlist(url)
     playlistName = p.title.replace("Album - ", "")
     print(f"{Bcolors.HEADER}Downloading Playlist: " + playlistName)
-
+    trackCount = len(p.videos)
     for index, track in enumerate(p.videos):
-        print(f"{track.title} [{index + 1}/{len(p.videos)}]")
-        DownloadTrack(track.watch_url, track, playlistName,
-                    index + 1, len(p.videos))
+        trackNum = index + 1
+        print(f"{track.title} [{trackNum}/{trackCount}]")
+        DownloadTrack(yt=track,AlbumName=playlistName,TrackNumber=trackNum, TrackCount=trackCount)
 
 
-def DownloadTrack(url, yt_obj=None, AlbumName=None, TrackNumber=None, TrackCount=None) -> YouTube:
-    yt = None
-    if yt_obj:
-        yt = yt_obj
-    else:
-        yt = YouTube(url)
+def DownloadTrack(yt: YouTube, AlbumName=None, TrackNumber=None, TrackCount=None) -> YouTube:
     # extract only audio from the video
     video = yt.streams.get_audio_only()
     #yt.register_on_progress_callback(on_progress)

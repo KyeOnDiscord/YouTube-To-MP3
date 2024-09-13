@@ -45,7 +45,7 @@ def format_custom_time(seconds):
 def DownloadSongLyrics(yt: YouTube):
     """Downloads Song Lyrics from textyl api"""
     url = "http://api.textyl.co/api/lyrics?q=" + urllib.parse.quote_plus(yt.title + " " + yt.author.replace(' - Topic', ''))
-    response = requests.request("GET", url,verify=False, timeout="5")
+    response = requests.request("GET", url,verify=False, timeout=5)
     if response.status_code != 200:
         return None
     return response.json()
