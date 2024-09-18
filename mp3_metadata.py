@@ -15,7 +15,7 @@ def get_album_cover(yt: YouTube) -> bytes:
     req = requests.get(url, timeout=5)
     if req.status_code == 404:
         return get_image_bytes(yt.thumbnail_url)
-    image = Image.open(req.raw)
+    image = Image.open(BytesIO(req.content))
 
     # Get the original dimensions
     width, height = image.size
@@ -58,7 +58,8 @@ def GetSongLyrics(lyrics): return "\n".join([entry["lyrics"] for entry in lyrics
 
 def ApplyID3Tags(filepath, yt: YouTube, AlbumName=None, TrackNumber=None, TrackCount=None):
     tags = ID3(filepath)
-    lyrics = DownloadSongLyrics(yt)
+    #lyrics = DownloadSongLyrics(yt)
+    lyrics = None
     if lyrics:
         tags.setall("SYLT", [SYLT(encoding=Encoding.UTF8, lang='eng', format=2, type=1, text=GetSyncedSongLyrics(lyrics))])
         tags.add(USLT(encoding=3, lang='eng', desc='desc', text=GetSongLyrics(lyrics)))
