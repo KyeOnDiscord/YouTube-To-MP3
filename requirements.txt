@@ -1,6 +1,6 @@
 ffmpeg_python==0.2.0
+Flask==2.2.3
 mutagen==1.47.0
-pytubefix==6.9.2
+Pillow==10.4.0
+pytubefix==6.5.2
 Requests==2.32.3
-sv_ttk==2.6.0
-flask==3.0.3
