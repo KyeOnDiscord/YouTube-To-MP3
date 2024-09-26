@@ -56,7 +56,7 @@ def GetSyncedSongLyricsCOMM(lyrics): return "\n".join((format_custom_time(entry[
 
 def GetSongLyrics(lyrics): return "\n".join([entry["lyrics"] for entry in lyrics])
 
-def ApplyID3Tags(filepath, yt: YouTube, AlbumName=None, TrackNumber=None, TrackCount=None):
+def ApplyID3Tags(filepath, yt: YouTube, AlbumName=None, TrackNumber=None, TrackCount=None, AlbumCover=None):
     tags = ID3(filepath)
     #lyrics = DownloadSongLyrics(yt)
     lyrics = None
@@ -72,13 +72,16 @@ def ApplyID3Tags(filepath, yt: YouTube, AlbumName=None, TrackNumber=None, TrackC
                 tags.add(TCON(encoding=3, genre=genre))
                 #print("Genre is: " + genre + " , (tag was " + tag + ")")
                 break
-
+    if AlbumCover is None:
+        AlbumCover = get_album_cover(yt)
+    else :
+        AlbumCover = get_image_bytes(AlbumCover)
     tags.add(APIC(
             encoding=3,          # 3 is for utf-8
             mime='image/jpeg',   # image/jpeg or image/png
             type=3,              # 3 is for the cover(front) image
             desc='Cover',
-            data=get_album_cover(yt)  # Image data
+            data=AlbumCover  # Image data
         ))
     tags.add(TPE1(encoding=3, text=yt.author.replace(
         " - Topic", "")))  # Artist

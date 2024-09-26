@@ -2,10 +2,9 @@
 
 import sys
 import time
-from pytubefix import YouTube
+from pytubefix import YouTube, Search
 import youtube_core  # local module
-from utils import is_ffmpeg_installed, isValidYouTubeURL, isPlaylist, isVideo
-
+from utils import *
 class Bcolors:
     """Colors for printing"""
     HEADER = '\033[95m'
@@ -44,5 +43,13 @@ if __name__ == "__main__":
             elif isVideo(url):
                 downloaded = youtube_core.DownloadTrack(YouTube(url))
                 print("Downloaded " + downloaded.title)
+        elif isValidSpotifyURL(url):
+            if isSpotifyTrack(url):
+                import spotify
+                spotify_track = spotify.getTrackDetails(url)
+                results = Search(spotify_track['name'] + " " + spotify_track['artists'][0]['name'])
+                if len(results.videos) == 0:
+                    print(f"{Bcolors.FAIL}No results found for the Spotify track.")
+                youtube_core.DownloadTrack(results.videos[0],AlbumCover=spotify_track['album']['images'][0]['url'])
         else:
             print(f"{Bcolors.FAIL}Invalid URL. Please enter a valid YouTube URL.")

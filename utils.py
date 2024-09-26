@@ -24,6 +24,12 @@ def is_ffmpeg_installed():
 def isValidYouTubeURL(url):
     parsed_url = urlparse(url)
     return "youtube.com" in parsed_url.netloc or "youtu.be" in parsed_url.netloc
+def isValidSpotifyURL(url):
+    parsed_url = urlparse(url)
+    return "spotify.com" in parsed_url.netloc or "open.spotify.com" in parsed_url.netloc
+def isSpotifyTrack(url):
+    parsed_url = urlparse(url)
+    return "track" in parsed_url.path
 
 
 def isPlaylist(url):

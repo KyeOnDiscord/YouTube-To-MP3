@@ -24,7 +24,7 @@ def DownloadPlaylist(url):
         DownloadTrack(yt=track,AlbumName=playlistName,TrackNumber=trackNum, TrackCount=trackCount)
 
 
-def DownloadTrack(yt: YouTube, AlbumName=None, TrackNumber=None, TrackCount=None) -> YouTube:
+def DownloadTrack(yt: YouTube, AlbumName=None, TrackNumber=None, TrackCount=None, AlbumCover=None) -> YouTube:
     # extract only audio from the video
     video = yt.streams.get_audio_only()
     #yt.register_on_progress_callback(on_progress)
@@ -42,5 +42,5 @@ def DownloadTrack(yt: YouTube, AlbumName=None, TrackNumber=None, TrackCount=None
     # delete out_file
     os.remove(out_file)
     # edit tags
-    ApplyID3Tags(new_file, yt, AlbumName, TrackNumber, TrackCount)
+    ApplyID3Tags(new_file, yt, AlbumName, TrackNumber, TrackCount, AlbumCover)
     return yt
