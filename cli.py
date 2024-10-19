@@ -37,19 +37,20 @@ if __name__ == "__main__":
         url = input(
             f"{Bcolors.ENDC}Enter the URL of the video or playlist you want to download: \n>> ")
 
-        if isValidYouTubeURL(url):
+        if isValidYouTubeURL(url): # YouTube
             if isPlaylist(url):
                 youtube_core.DownloadPlaylist(url)
             elif isVideo(url):
                 downloaded = youtube_core.DownloadTrack(YouTube(url))
                 print("Downloaded " + downloaded.title)
-        elif isValidSpotifyURL(url):
+        elif isValidSpotifyURL(url): # Spotify
             if isSpotifyTrack(url):
                 import spotify
                 spotify_track = spotify.getTrackDetails(url)
                 results = Search(spotify_track['name'] + " " + spotify_track['artists'][0]['name'])
                 if len(results.videos) == 0:
                     print(f"{Bcolors.FAIL}No results found for the Spotify track.")
-                youtube_core.DownloadTrack(results.videos[0],AlbumCover=spotify_track['album']['images'][0]['url'])
+                downloaded = youtube_core.DownloadTrack(results.videos[0],AlbumCover=spotify_track['album']['images'][0]['url'])
+                print("Downloaded " + downloaded.title)
         else:
             print(f"{Bcolors.FAIL}Invalid URL. Please enter a valid YouTube URL.")

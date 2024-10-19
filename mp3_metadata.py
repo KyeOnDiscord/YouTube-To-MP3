@@ -7,6 +7,8 @@ from mutagen._constants import GENRES
 from pytubefix import YouTube
 from PIL import Image
 from utils import get_image_bytes
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def get_album_cover(yt: YouTube) -> bytes:
     """Gets an album cover in bytes from a YouTube object"""
@@ -45,7 +47,7 @@ def format_custom_time(seconds):
 def DownloadSongLyrics(yt: YouTube):
     """Downloads Song Lyrics from textyl api"""
     url = "http://api.textyl.co/api/lyrics?q=" + urllib.parse.quote_plus(yt.title + " " + yt.author.replace(' - Topic', ''))
-    response = requests.request("GET", url,verify=False, timeout=5)
+    response = requests.request("GET", url,verify=False, timeout=8)
     if response.status_code != 200:
         return None
     return response.json()
@@ -58,7 +60,7 @@ def GetSongLyrics(lyrics): return "\n".join([entry["lyrics"] for entry in lyrics
 
 def ApplyID3Tags(filepath, yt: YouTube, AlbumName=None, TrackNumber=None, TrackCount=None, AlbumCover=None):
     tags = ID3(filepath)
-    #lyrics = DownloadSongLyrics(yt)
+    lyrics = DownloadSongLyrics(yt)
     lyrics = None
     if lyrics:
         tags.setall("SYLT", [SYLT(encoding=Encoding.UTF8, lang='eng', format=2, type=1, text=GetSyncedSongLyrics(lyrics))])
