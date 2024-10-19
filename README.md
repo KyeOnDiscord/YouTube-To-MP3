@@ -1,6 +1,14 @@
 # YouTube-To-MP3
  Yet another youtube to mp3 with metatag ([ID3v.2.3](https://en.wikipedia.org/wiki/ID3#ID3v2.3)) support
 
+| Feature           |   |
+|-------------------|-----|
+| YouTube Track     | ✅  |
+| YouTube Playlist  | ✅  |
+| Spotify Track     | ✅  |
+| Spotify Playlist  | ❌  |
+
+
 ## Why MP3?
 
 MP3 files allow you to own your music forever, without having to rely on a music streaming service. Downloading MP3s are free and you don't need to pay for a streaming service to get rid of ads. MP3s are also supported by almost every device and music player, so you can listen to your music anywhere.
@@ -28,11 +36,8 @@ pip install -r requirements.txt
 ```
 
 ### Usage:
-You can either use the Command Line Interface (cli.py) or the GUI (ui.py)
 ```bash
 python3 cli.py
 ```
-<!-- or
-```bash
-python3 ui.py
-``` -->
+
+Then it paste in a YouTube URL (or Playlist URL) or Spotify Track and it will download the audio and add the metatags.
